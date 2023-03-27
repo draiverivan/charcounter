@@ -26,9 +26,9 @@ public class CharCounter {
 
         Map<Character, Integer> charCountMap = new LinkedHashMap<>();
         for (int i = 0; i < stringToCount.length(); i++) {
-            char c = stringToCount.charAt(i);
-            int count = charCountMap.getOrDefault(c, 0);
-            charCountMap.put(c, count + 1);
+            char charInString = stringToCount.charAt(i);
+            int count = charCountMap.getOrDefault(charInString, 0);
+            charCountMap.put(charInString, count + 1);
         }
 
         cache.put(stringToCount, charCountMap);
