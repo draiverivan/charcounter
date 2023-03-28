@@ -25,6 +25,7 @@ public class StartCharCounter {
 	private static final String DOUBLE_QUOTE = "\"";
 	private static final String TAB = "\t";
 	private static final String CACHE_FILE = "charCounterCache.ser";
+	private static final String DASH_SIGN = " - ";
 
 	public static void main(final String[] args) {
 		CharCounter charCounter = new CharCounter();
@@ -38,7 +39,7 @@ public class StartCharCounter {
 				logger.info("Cache entry for: " + DOUBLE_QUOTE + key + DOUBLE_QUOTE);
 				Map<Character, Integer> charCountMap = cache.get(key);
 				for (Entry<Character, Integer> entry : charCountMap.entrySet()) {
-					logger.info(TAB + DOUBLE_QUOTE + entry.getKey() + DOUBLE_QUOTE + " - " + entry.getValue());
+					logger.info(TAB + DOUBLE_QUOTE + entry.getKey() + DOUBLE_QUOTE + DASH_SIGN + entry.getValue());
 				}
 			}
 
