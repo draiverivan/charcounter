@@ -1,7 +1,6 @@
 package ua.foxminded.javaspring.charcounter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,8 +11,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import ua.foxminded.javaspring.charcounter.CharCounter;
-
 class CharCounterTest {
 
 	private CharCounter charCounter;
@@ -22,8 +19,6 @@ class CharCounterTest {
 	void setup() {
 		charCounter = new CharCounter();
 	}
-
-	CharCounter charCounter2 = new CharCounter();
 
 	@ParameterizedTest
 	@CsvSource({
@@ -75,7 +70,7 @@ class CharCounterTest {
 		Map<Character, Integer> result = charCounter.countUniqueChars(input);
 		assertEquals(expectedCount, result.get(ch));
 	}
-	
+
 	@ParameterizedTest
 	@CsvSource({
 	// @formatter:off
@@ -98,7 +93,7 @@ class CharCounterTest {
 		Map<Character, Integer> result = charCounter.countUniqueChars(input);
 		assertEquals(expectedCount, result.get(ch));
 	}
-	
+
 	@ParameterizedTest
 	@CsvSource({
 	// @formatter:off
@@ -123,14 +118,15 @@ class CharCounterTest {
 		"Гідроізоляція DryWall33-31, 1, 1"
 		// @formatter:on
 	})
-	void countUniqueChars_shouldBeEqual_whenCombineLettersAndSymbolsAndNonLatin(String input, char ch, int expectedCount) {
+	void countUniqueChars_shouldBeEqual_whenCombineLettersAndSymbolsAndNonLatin(String input, char ch,
+			int expectedCount) {
 		Map<Character, Integer> result = charCounter.countUniqueChars(input);
 		assertEquals(expectedCount, result.get(ch));
 	}
 
 	@ParameterizedTest
 	@CsvSource({
-		// @formatter:off
+	// @formatter:off
 		"' '' '' '' '' '' ', ' ', 6"
 		// @formatter:on
 	})
@@ -138,19 +134,18 @@ class CharCounterTest {
 		Map<Character, Integer> result = charCounter.countUniqueChars(input);
 		assertEquals(expectedCount, result.get(ch));
 	}
-	
+
 	@ParameterizedTest
 	@EmptySource
 	void countUniqueChars_shouldBeEqual_whenEmptyString(String input) {
-		CharCounter charCounter2 = new CharCounter();
 		Map<Character, Integer> charCountMap = new LinkedHashMap<>();
-		assertEquals(charCountMap, charCounter2.countUniqueChars(input));
+		assertEquals(charCountMap, charCounter.countUniqueChars(input));
 	}
 
 	@ParameterizedTest
 	@NullSource
-	void countUniqueChars_shouldThrowsNullPointerException_whenStringNull(String input) {
-		assertThrows(NullPointerException.class, () -> charCounter2.countUniqueChars(input));
+	void countUniqueChars_shouldBeEqual_whenNullString(String input) {
+		assertEquals(null, charCounter.countUniqueChars(input));
 	}
 
 }

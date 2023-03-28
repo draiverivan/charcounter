@@ -13,25 +13,34 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CharCounter {
-    private Map<String, Map<Character, Integer>> cache;
+	private Map<String, Map<Character, Integer>> cache;
 
-    public CharCounter() {
-        cache = new LinkedHashMap<>();
-    }
+	public void setCache(Map<String, Map<Character, Integer>> cache) {
+		this.cache = cache;
+	}
 
-    public Map<Character, Integer> countUniqueChars(String stringToCount) {
-        if (cache.containsKey(stringToCount)) {
-            return cache.get(stringToCount);
-        }
+	public Map<String, Map<Character, Integer>> getCache() {
+		return cache;
+	}
 
-        Map<Character, Integer> charCountMap = new LinkedHashMap<>();
-        for (int i = 0; i < stringToCount.length(); i++) {
-            char charInString = stringToCount.charAt(i);
-            int count = charCountMap.getOrDefault(charInString, 0);
-            charCountMap.put(charInString, count + 1);
-        }
+	public CharCounter() {
+		cache = new LinkedHashMap<>();
+	}
 
-        cache.put(stringToCount, charCountMap);
-        return charCountMap;
-    }
+	public Map<Character, Integer> countUniqueChars(String stringToCount) {
+		if (cache.containsKey(stringToCount) || stringToCount == null) {
+			return cache.get(stringToCount);
+		}
+
+		Map<Character, Integer> charCountMap = new LinkedHashMap<>();
+		for (int i = 0; i < stringToCount.length(); i++) {
+			char charInString = stringToCount.charAt(i);
+			int count = charCountMap.getOrDefault(charInString, 0);
+			charCountMap.put(charInString, count + 1);
+		}
+
+		cache.put(stringToCount, charCountMap);
+		return charCountMap;
+	}
+
 }
