@@ -36,12 +36,12 @@ public class StartCharCounter {
 			if (userString.equals("1")) {
 				Cache.loadCache(charCounter);
 				Map<String, Map<Character, Integer>> cache = Cache.getCache();
-				logger.info("Cache contents:");
+				logger.debug("Cache contents:");
 				for (String key : cache.keySet()) {
-					logger.info("Cache entry for: " + DOUBLE_QUOTE + key + DOUBLE_QUOTE);
+					logger.debug("Cache entry for: " + DOUBLE_QUOTE + key + DOUBLE_QUOTE);
 					Map<Character, Integer> charCountMap = cache.get(key);
 					for (Entry<Character, Integer> entry : charCountMap.entrySet()) {
-						logger.info(TAB + DOUBLE_QUOTE + entry.getKey() + DOUBLE_QUOTE + DASH_SIGN + entry.getValue());
+						logger.debug(TAB + DOUBLE_QUOTE + entry.getKey() + DOUBLE_QUOTE + DASH_SIGN + entry.getValue());
 					}
 				}
 				continue;
