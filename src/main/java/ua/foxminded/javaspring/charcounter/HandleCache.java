@@ -1,5 +1,8 @@
 package ua.foxminded.javaspring.charcounter;
 
+/*This class is for handle cache. It has 3 main methods, addCache(), loadCache(), saveCache().
+saveCache() adds new result of countUniqueChars(). loadCache() loads CACHE_FILE. And saveCache() to CACHE_FILE.*/
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,33 +15,28 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Cache {
+public class HandleCache {
 
 	static Logger logger = LoggerFactory.getLogger(StartCharCounter.class);
-
-	private Cache() {
-		throw new IllegalStateException("Utility class");
-	}
-
+	private static HandleCache instance;
+	private static final String CACHE_FILE = "charCounterCache.ser";
+	static CharCounter charCounter = new CharCounter();
 	private static Map<String, Map<Character, Integer>> cache = new LinkedHashMap<>();;
 
 	public static void setCache(Map<String, Map<Character, Integer>> cache) {
-		Cache.cache = cache;
+		HandleCache.cache = cache;
 	}
 
 	public static Map<String, Map<Character, Integer>> getCache() {
 		return cache;
 	}
 
-	public static synchronized Cache getInstance() {
+	public static synchronized HandleCache getInstance() {
 		if (instance == null)
-			instance = new Cache();
+			instance = new HandleCache();
 		return instance;
 	}
 
-	private static Cache instance;
-	private static final String CACHE_FILE = "charCounterCache.ser";
-	static CharCounter charCounter = new CharCounter();
 
 	public static void addCache(String key, Map<Character, Integer> value) {
 		getCache().put(key, value);

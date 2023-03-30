@@ -34,8 +34,8 @@ public class StartCharCounter {
 			}
 
 			if (userString.equals("1")) {
-				Cache.loadCache(charCounter);
-				Map<String, Map<Character, Integer>> cache = Cache.getCache();
+				HandleCache.loadCache(charCounter);
+				Map<String, Map<Character, Integer>> cache = HandleCache.getCache();
 				logger.debug("Cache contents:");
 				for (String key : cache.keySet()) {
 					logger.debug("Cache entry for: " + DOUBLE_QUOTE + key + DOUBLE_QUOTE);
@@ -52,7 +52,7 @@ public class StartCharCounter {
 			for (Entry<Character, Integer> entry : charCountMap.entrySet()) {
 				logger.info(DOUBLE_QUOTE + entry.getKey() + DOUBLE_QUOTE + DASH_SIGN + entry.getValue());
 			}
-			Cache.saveCache(charCounter);
+			HandleCache.saveCache(charCounter);
 		}
 	}
 }
