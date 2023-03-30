@@ -10,13 +10,13 @@ import org.slf4j.LoggerFactory;
 public class StartCharCounter {
 
 	static Logger logger = LoggerFactory.getLogger(StartCharCounter.class);
-	static CharCounter charCounter = new CharCounter();
 	private static final String DOUBLE_QUOTE = "\"";
 	private static final String TAB = "\t";
 	private static final String DASH_SIGN = " - ";
 
 	public static void main(final String[] args) {
-		CharCounter charCounter = new CharCounter();
+		HandleCache handleCache = HandleCache.getInstance();
+		CharCounter charCounter = new CharCounter(handleCache);
 		Scanner scanner = new Scanner(System.in);
 
 		while (true) {
@@ -34,8 +34,8 @@ public class StartCharCounter {
 			}
 
 			if (userString.equals("1")) {
-				HandleCache.loadCache(charCounter);
-				Map<String, Map<Character, Integer>> cache = HandleCache.getCache();
+				handleCache.loadCache();
+				Map<String, Map<Character, Integer>> cache = handleCache.getCache();
 				logger.debug("Cache contents:");
 				for (String key : cache.keySet()) {
 					logger.debug("Cache entry for: " + DOUBLE_QUOTE + key + DOUBLE_QUOTE);
@@ -52,7 +52,7 @@ public class StartCharCounter {
 			for (Entry<Character, Integer> entry : charCountMap.entrySet()) {
 				logger.info(DOUBLE_QUOTE + entry.getKey() + DOUBLE_QUOTE + DASH_SIGN + entry.getValue());
 			}
-			HandleCache.saveCache(charCounter);
+			handleCache.saveCache();
 		}
 	}
 }

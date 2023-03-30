@@ -14,9 +14,15 @@ import java.util.Map;
 
 public class CharCounter {
 
+	HandleCache handleCache;
+
+	public CharCounter(HandleCache handleCache) {
+		this.handleCache = handleCache;
+	}
+
 	public Map<Character, Integer> countUniqueChars(String stringToCount) {
-		if (HandleCache.getCache().containsKey(stringToCount) || stringToCount == null) {
-			return HandleCache.getCache().get(stringToCount);
+		if (handleCache.getCache().containsKey(stringToCount) || stringToCount == null) {
+			return handleCache.getCache().get(stringToCount);
 		}
 
 		Map<Character, Integer> charCountMap = new LinkedHashMap<>();
@@ -26,7 +32,7 @@ public class CharCounter {
 			charCountMap.put(charInString, count + 1);
 		}
 
-		HandleCache.addCache(stringToCount, charCountMap);
+		handleCache.addCache(stringToCount, charCountMap);
 		return charCountMap;
 	}
 

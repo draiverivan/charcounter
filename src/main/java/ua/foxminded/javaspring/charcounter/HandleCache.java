@@ -17,17 +17,12 @@ import org.slf4j.LoggerFactory;
 
 public class HandleCache {
 
-	static Logger logger = LoggerFactory.getLogger(StartCharCounter.class);
+	Logger logger = LoggerFactory.getLogger(HandleCache.class);
 	private static HandleCache instance;
 	private static final String CACHE_FILE = "charCounterCache.ser";
-	static CharCounter charCounter = new CharCounter();
-	private static Map<String, Map<Character, Integer>> cache = new LinkedHashMap<>();;
+	private Map<String, Map<Character, Integer>> cache = new LinkedHashMap<>();
 
-	public static void setCache(Map<String, Map<Character, Integer>> cache) {
-		HandleCache.cache = cache;
-	}
-
-	public static Map<String, Map<Character, Integer>> getCache() {
+	public Map<String, Map<Character, Integer>> getCache() {
 		return cache;
 	}
 
@@ -37,24 +32,23 @@ public class HandleCache {
 		return instance;
 	}
 
-
-	public static void addCache(String key, Map<Character, Integer> value) {
+	public void addCache(String key, Map<Character, Integer> value) {
 		getCache().put(key, value);
 	}
 
-	public static void loadCache(CharCounter charCounter) {
+	public void loadCache() {
 		File cacheFile = new File(CACHE_FILE);
 		if (cacheFile.exists()) {
 			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cacheFile))) {
-				Map<String, Map<Character, Integer>> cache = (Map<String, Map<Character, Integer>>) ois.readObject();
-				setCache(cache);
+				Map<String, Map<Character, Integer>> cacheLoad = (Map<String, Map<Character, Integer>>) ois.readObject();
+				this.cache = cacheLoad;
 			} catch (IOException | ClassNotFoundException e) {
 				logger.warn("Could not read cache file: " + e.getMessage());
 			}
 		}
 	}
 
-	public static void saveCache(CharCounter charCounter) {
+	public void saveCache() {
 		File cacheFile = new File(CACHE_FILE);
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(cacheFile))) {
 			oos.writeObject(getCache());

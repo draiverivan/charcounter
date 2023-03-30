@@ -14,10 +14,11 @@ import org.junit.jupiter.params.provider.NullSource;
 class CharCounterTest {
 
 	private CharCounter charCounter;
+	HandleCache handleCache = HandleCache.getInstance();
 
 	@BeforeEach
 	void setup() {
-		charCounter = new CharCounter();
+		charCounter = new CharCounter(handleCache);
 	}
 
 	@ParameterizedTest
