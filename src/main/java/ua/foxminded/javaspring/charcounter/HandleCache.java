@@ -9,16 +9,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HandleCache {
+public class HandleCache implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private static HandleCache instance;
+
+	private HandleCache() {
+	}
 
 	Logger logger = LoggerFactory.getLogger(HandleCache.class);
-	private static HandleCache instance;
 	private static final String CACHE_FILE = "charCounterCache.ser";
 	private Map<String, Map<Character, Integer>> cache = new LinkedHashMap<>();
 
@@ -40,7 +46,8 @@ public class HandleCache {
 		File cacheFile = new File(CACHE_FILE);
 		if (cacheFile.exists()) {
 			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cacheFile))) {
-				Map<String, Map<Character, Integer>> cacheLoad = (Map<String, Map<Character, Integer>>) ois.readObject();
+				Map<String, Map<Character, Integer>> cacheLoad = (Map<String, Map<Character, Integer>>) ois
+						.readObject();
 				this.cache = cacheLoad;
 			} catch (IOException | ClassNotFoundException e) {
 				logger.warn("Could not read cache file: " + e.getMessage());
